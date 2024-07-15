@@ -7,6 +7,10 @@ cluster: ## (re)create a test cluster with kind
 	@kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
 	@helm install argo-cd charts/argo-cd/
 
+start: ## start the test cluster
+	@docker start kind-worker2 kind-worker kind-control-plan
+	@echo "Cluster started"
+
 stop: ## stop the test cluster
 	@docker stop kind-worker2 kind-worker kind-control-plan
 	@echo "Cluster stopped"
