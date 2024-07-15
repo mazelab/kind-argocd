@@ -5,6 +5,9 @@ cluster: ## (re)create a test cluster with kind
 	@kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 	@kubectl wait --namespace ingress-nginx  --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
 	@kubectl apply -f https://kind.sigs.k8s.io/examples/ingress/usage.yaml
+	@helm repo add argo-cd https://argoproj.github.io/argo-helm
+	@helm repo update
+	@helm dep update charts/argo-cd/
 	@helm install argo-cd charts/argo-cd/
 
 start: ## start the test cluster
