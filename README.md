@@ -1,4 +1,5 @@
 # Kind ArgoCD
+
 This repository contains scripts and configuration files to set up a test cluster using Kind and deploy ArgoCD.
 
 ## Prerequisites
@@ -61,4 +62,5 @@ Stops the running kind cluster without deletion.
 ```bash
 make clean
 ````
+
 Warning, this is a destructive action. It will delete the cluster container.
