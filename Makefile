@@ -10,11 +10,11 @@ create-cluster: ## (re)create a test cluster with kind
 recreate-cluster: clean create-cluster ## delete and create a test cluster with kind
 
 start: ## start the test cluster
-	@docker start kind-worker2 kind-worker kind-control-plan
+	@docker start kind-worker2 kind-worker kind-control-plane
 	@echo "Cluster started"
 
 stop: ## stop the test cluster
-	@docker stop kind-worker2 kind-worker kind-control-plan
+	@docker stop kind-worker2 kind-worker kind-control-plane
 	@echo "Cluster stopped"
 	
 clean: ## delete the test cluster
