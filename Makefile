@@ -1,10 +1,15 @@
-create-cluster: ## (re)create a test cluster with kind
-	kind create cluster --config kind-config.yaml
+.PHONY: create-dirs
+
+create-dirs:
+	mkdir -p $(shell echo $$HOME)/.kindpro/data
+
+create-cluster: create-dirs ## (re)create a test cluster with kind
+	sed "s|__HOME__|$$HOME|g" kind-config.yaml | kind create cluster --config=-
 	@kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 	@kubectl wait --namespace ingress-nginx  --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
+	@kubectl apply -f persistence.yaml
 	@helm repo add argo-cd https://argoproj.github.io/argo-helm
 	@helm repo update
-	@helm dep update charts/argo-cd/
 	@helm install argo-cd charts/argo-cd/
 
 recreate-cluster: clean create-cluster ## delete and create a test cluster with kind
