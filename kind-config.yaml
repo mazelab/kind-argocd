@@ -18,8 +18,8 @@ nodes:
   - role: worker
     extraMounts:
       - hostPath: __HOME__/.kindpro/data
-        containerPath: /home/kindpro-data
+        containerPath: /var/local-path-provisioner 
   - role: worker
     extraMounts:
       - hostPath: __HOME__/.kindpro/data
-        containerPath: /home/kindpro-data
+        containerPath: /var/local-path-provisioner

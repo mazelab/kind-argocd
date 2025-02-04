@@ -4,18 +4,12 @@ create-dirs:
 	mkdir -p $(shell echo $$HOME)/.kindpro/data
 
 create-cluster: create-dirs ## (re)create a test cluster with kind
-	sed "s|__HOME__|$$HOME|g" kind-config.yaml | kind create cluster --config=-
-	@kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
-	@kubectl wait --namespace ingress-nginx  --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=90s
-	@kubectl apply -f persistence.yaml
-	@helm repo add argo-cd https://argoproj.github.io/argo-helm
-	@helm repo update
-	@helm install argo-cd charts/argo-cd/
+	@./scripts/create_cluster.sh
 
 recreate-cluster: clean create-cluster ## delete and create a test cluster with kind
 
 start: ## start the test cluster
-	@docker start kind-worker2 kind-worker kind-control-plane
+	@docker start kind-control-plane kind-worker2 kind-worker 
 	@echo "Cluster started"
 
 stop: ## stop the test cluster
